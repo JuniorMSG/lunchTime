@@ -1,14 +1,14 @@
-package com.lunchMain;
+package com.cat.lunchTime;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class lunchMainApplicationTest {
+public class LunchTimeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(lunchMainApplicationTest.class, args);
-		System.out.println("1234");
+		SpringApplication.run(LunchTimeApplication.class, args);
+		System.out.println("print lunchTime Project");
 	}
 
 }

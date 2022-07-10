@@ -1,4 +1,4 @@
-package com.lunchMain.dto;
+package com.cat.lunchTime.dto;
 
 import org.junit.jupiter.api.Test;
 

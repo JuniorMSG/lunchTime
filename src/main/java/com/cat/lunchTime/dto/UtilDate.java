@@ -1,4 +1,4 @@
-package com.lunchMain.dto;
+package com.cat.lunchTime.dto;
 
 import lombok.experimental.UtilityClass;
 
