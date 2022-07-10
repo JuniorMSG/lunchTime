@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.lunchMain.dto.UtilDateTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-07-10T12:31:59" hostname="DESKTOP-EQ0G86P" time="0.01">
+  <properties/>
+  <testcase name="test()" classname="com.lunchMain.dto.UtilDateTest" time="0.01"/>
+  <system-out><![CDATA[Util Date는 생성자 생성이 안된다
+2021-07-20T10:10
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
