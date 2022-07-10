@@ -56,8 +56,7 @@
           - React / Redux 
           - SCSS
       - DB
-          - ?
-      - 데이터 수집, 분석, 크롤링 시스템, 크롤링 지원 툴
-          - Python, Selenium, bs4, pandas , tkinter
+          - H2 DB
       - DevOps
-          - svn, git, notion
+          - git
+          - git Action을 써보자 
