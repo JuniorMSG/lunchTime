@@ -1,6 +1,9 @@
 package com.cat.lunchTime.controller;
 
+import com.cat.lunchTime.service.UserCreateService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +24,22 @@ import java.util.List;
 
 @Slf4j
 @RestController // Bean 을 RestController 으로 등록한다.
-public class LunchTimeGroupController {
+@RequiredArgsConstructor
+public class UserController {
+    private final UserCreateService userCreateService;
 
+    @GetMapping("/getGroupInfo")
+    public List<String> getGroupbInpo(){
+        log.info("Get /getGroupInfo HTTP/1.1 ");
+
+        return Arrays.asList("직장", "집", "학원");
+    }
+
+    @GetMapping("/create-user")
+    public List<String> createUser(){
+        log.info("Get /create-user HTTP/1.1 ");
+        userCreateService.createUser();
+
+        return List.of("Olaf");
+    }
 }

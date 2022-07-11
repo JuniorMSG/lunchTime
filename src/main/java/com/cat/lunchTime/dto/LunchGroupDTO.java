@@ -1,9 +1,6 @@
 package com.cat.lunchTime.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -19,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Slf4j
+@Builder
 // @UtilityClass
 // @ToString 필요할때만
 // @RequiredArgsConstructor
@@ -41,35 +39,4 @@ public class LunchGroupDTO {
         log.info("==LOG==");
     }
 
-    public static class LunchGroupDTOBuilder {
-        private String name;
-        private Integer age;
-        private LocalDateTime startAt;
-
-        LunchGroupDTOBuilder() {
-        }
-
-        public LunchGroupDTOBuilder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public LunchGroupDTOBuilder age(Integer age) {
-            this.age = age;
-            return this;
-        }
-
-        public LunchGroupDTOBuilder startAt(LocalDateTime startAt) {
-            this.startAt = startAt;
-            return this;
-        }
-
-        public LunchGroupDTO build() {
-            return new LunchGroupDTO(name, age, startAt);
-        }
-
-        public String toString() {
-            return "LunchGroupDTO.LunchGroupDTOBuilder(name=" + this.name + ", age=" + this.age + ", startAt=" + this.startAt + ")";
-        }
-    }
 }

@@ -1,7 +1,7 @@
 package com.cat.lunchTime.entity;
 
-import com.cat.lunchTime.type.GroupMember;
 import com.cat.lunchTime.type.FoodCountry;
+import com.cat.lunchTime.type.JobType;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -27,19 +27,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class LunchGroup
+public class UserInfo
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    private String userId;
+    private String userPw;
+    private String name;
+    private Integer age;
+
     @Enumerated(EnumType.STRING)
-    private GroupMember groupMember;
+    private JobType jobType;
 
     @Enumerated(EnumType.STRING)
     private FoodCountry foodCountry;
 
-    private Integer price;
 
     @CreatedDate
     private LocalDateTime createdAt;
