@@ -41,5 +41,9 @@ public class UserCreateService {
     }
 
     private void validateCreateUserRequest(CreateUserDTO.Request request) {
+
+        if(request.getUserId().length() > 8){
+
+        }
     }
 }
