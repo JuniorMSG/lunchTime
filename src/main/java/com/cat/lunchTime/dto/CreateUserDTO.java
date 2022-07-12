@@ -1,5 +1,6 @@
 package com.cat.lunchTime.dto;
 
+import com.cat.lunchTime.entity.UserInfo;
 import com.cat.lunchTime.type.FoodCountry;
 import com.cat.lunchTime.type.JobType;
 import lombok.*;
@@ -43,8 +44,30 @@ public class CreateUserDTO {
 
       @NotNull
       private FoodCountry foodCountry;
+   }
 
+   @Getter
+   @Setter
+   @AllArgsConstructor
+   @NoArgsConstructor
+   @Builder
+   public static class Response{
+      private String userId;
+      private String userPw;
+      private String name;
+      private Integer age;
+      private JobType jobType;
+      private FoodCountry foodCountry;
 
-
+      public static Response fromEntity(UserInfo userInfo){
+         return Response.builder()
+                 .userId(userInfo.getUserId())
+                 .userPw(userInfo.getUserPw())
+                 .name(userInfo.getName())
+                 .age(userInfo.getAge())
+                 .jobType(userInfo.getJobType())
+                 .foodCountry(userInfo.getFoodCountry())
+                 .build();
+      }
    }
 }

@@ -30,21 +30,21 @@ public class UserCreateService {
     private final EntityManager em;
 
     @Transactional
-    public void createUser(CreateUserDTO.Request request){
+    public CreateUserDTO.Response createUser(CreateUserDTO.Request request){
 
             validateCreateUserRequest(request);
             // business logic start
             UserInfo userInfo = UserInfo.builder()
-                    .userId("milk1234")
-                    .userPw("1234")
-                    .name("MS")
-                    .age(29)
-                    .jobType(JobType.Developer)
-                    .foodCountry(FoodCountry.Korea)
+                    .userId(request.getUserId())
+                    .userPw(request.getUserPw())
+                    .name(request.getName())
+                    .age(request.getAge())
+                    .jobType(request.getJobType())
+                    .foodCountry(request.getFoodCountry())
                     .build();
 
-
             userRepository.save(userInfo);
+            return CreateUserDTO.Response.fromEntity(userInfo);
     }
 
     private void validateCreateUserRequest(CreateUserDTO.Request request) {

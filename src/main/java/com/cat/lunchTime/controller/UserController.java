@@ -41,12 +41,10 @@ public class UserController {
     // ctrl + alt + l 자동정렬
     // ctrl + alt + o 클래스 임포트 / 삭제
     @PostMapping("/create-user")
-    public List<String> createUser(
+    public CreateUserDTO.Response createUser(
             @Valid @RequestBody CreateUserDTO.Request request
     ) {
         log.info("request : {}", request);
-        userCreateService.createUser(request);
-
-        return List.of("Olaf");
+        return userCreateService.createUser(request);
     }
 }
