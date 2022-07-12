@@ -2,6 +2,8 @@ package com.cat.lunchTime.service;
 
 import com.cat.lunchTime.dto.CreateUserDTO;
 import com.cat.lunchTime.entity.UserInfo;
+import com.cat.lunchTime.exception.UserErrorCode;
+import com.cat.lunchTime.exception.UserException;
 import com.cat.lunchTime.repository.UserRepository;
 import com.cat.lunchTime.type.FoodCountry;
 import com.cat.lunchTime.type.JobType;
@@ -11,6 +13,11 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+
+import java.util.Optional;
+
+import static com.cat.lunchTime.exception.UserErrorCode.DUPLICATED_MEMBER_ID;
+import static com.cat.lunchTime.exception.UserErrorCode.MEMBER_ID_LENGTH;
 
 @Service
 
@@ -42,8 +49,20 @@ public class UserCreateService {
 
     private void validateCreateUserRequest(CreateUserDTO.Request request) {
 
-        if(request.getUserId().length() > 8){
-
+        // ctrl + alt + v 변수로 refactor 할 수 있다.
+        String userId = request.getUserId();
+        if(userId.length() < 8){
+            throw new UserException(DUPLICATED_MEMBER_ID);
         }
+
+
+//        Optional<UserInfo> userInfo = userRepository.findByUserId(request.getUserId());
+//        if (userInfo.isPresent())
+//            throw new UserException(MEMBER_ID_LENGTH);
+        userRepository.findByUserId(request.getUserId()).ifPresent((userInfo -> {
+            throw new UserException(MEMBER_ID_LENGTH);
+        }));
+
+
     }
 }
