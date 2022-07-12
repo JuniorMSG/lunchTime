@@ -24,6 +24,8 @@ public class UserCreateService {
 
     @Transactional
     public void createUser(CreateUserDTO.Request request){
+
+            validateCreateUserRequest(request);
             // business logic start
             UserInfo userInfo = UserInfo.builder()
                     .userId("milk1234")
@@ -33,6 +35,11 @@ public class UserCreateService {
                     .jobType(JobType.Developer)
                     .foodCountry(FoodCountry.Korea)
                     .build();
+
+
             userRepository.save(userInfo);
+    }
+
+    private void validateCreateUserRequest(CreateUserDTO.Request request) {
     }
 }
