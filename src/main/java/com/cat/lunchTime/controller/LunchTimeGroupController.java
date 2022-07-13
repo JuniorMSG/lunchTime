@@ -23,10 +23,4 @@ import java.util.List;
 @RestController // Bean 을 RestController 으로 등록한다.
 public class LunchTimeGroupController {
 
-    @GetMapping("/getGroupInfo")
-    public List<String> getGroupbInpo(){
-        log.info("Get /getGroupInfo HTTP/1.1 ");
-
-        return Arrays.asList("직장", "집", "학원");
-    }
 }

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 /**
  * packageName    : com.cat.lunchTime.entity
- * fileName       : MemberFood
+ * fileName       : GroupMember
  * author         : Cat
  * date           : 2022-07-11
  * description    :
@@ -14,15 +14,18 @@ import lombok.Getter;
  * -----------------------------------------------------------
  * 2022-07-11        Cat       최초 생성
  */
+
 @AllArgsConstructor
 @Getter
-public enum MemberFood {
-    Korea("경양식 돈까스"),
-    Japan("일본식 돈까스"),
-    china("짜장면"),
-    USA("스테이크")
+public enum JobType {
+
+    PM("프로젝트 매니저"),
+    PL("프로젝트 리더"),
+    TeamLeader("팀장"),
+    Developer("개발자"),
+    Designer("디자이너"),
+
     ;
 
     private final String description;
-    
 }
