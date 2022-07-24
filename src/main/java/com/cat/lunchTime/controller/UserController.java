@@ -1,16 +1,14 @@
 package com.cat.lunchTime.controller;
 
 import com.cat.lunchTime.dto.CreateUserDTO;
+import com.cat.lunchTime.dto.UserInfoDto;
+import com.cat.lunchTime.dto.UserInfoDetailDto;
 import com.cat.lunchTime.service.UserCreateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,11 +29,21 @@ import java.util.List;
 public class UserController {
     private final UserCreateService userCreateService;
 
-    @GetMapping("/getGroupInfo")
-    public List<String> getGroupbInpo() {
+    @GetMapping("/getGroupInfos")
+    public List<UserInfoDto> getGroupbInpos() {
         log.info("Get /getGroupInfo HTTP/1.1 ");
 
-        return Arrays.asList("직장", "집", "학원");
+        return userCreateService.getAllIds();
+    }
+
+    @GetMapping("/getGroupInfos/{memberId}")
+    public UserInfoDetailDto getGroupbInpoDetail(
+            @PathVariable String memberId
+    ) {
+        // 중괄호로 넣게되면 pass variable으로 값을 가져 올 수 있게된다.
+        log.info("Get /getGroupInfo HTTP/1.1 ");
+
+        return userCreateService.getGroupbInpoDetail(memberId);
     }
 
     // ctrl + alt + l 자동정렬

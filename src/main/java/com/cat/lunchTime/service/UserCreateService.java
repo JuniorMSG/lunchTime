@@ -1,6 +1,8 @@
 package com.cat.lunchTime.service;
 
 import com.cat.lunchTime.dto.CreateUserDTO;
+import com.cat.lunchTime.dto.UserInfoDetailDto;
+import com.cat.lunchTime.dto.UserInfoDto;
 import com.cat.lunchTime.entity.UserInfo;
 import com.cat.lunchTime.exception.UserErrorCode;
 import com.cat.lunchTime.exception.UserException;
@@ -14,10 +16,11 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import static com.cat.lunchTime.exception.UserErrorCode.DUPLICATED_MEMBER_ID;
-import static com.cat.lunchTime.exception.UserErrorCode.MEMBER_ID_LENGTH;
+import static com.cat.lunchTime.exception.UserErrorCode.*;
 
 @Service
 
@@ -51,6 +54,7 @@ public class UserCreateService {
 
         // ctrl + alt + v 변수로 refactor 할 수 있다.
         String userId = request.getUserId();
+        System.out.println(userId);
         if(userId.length() < 8){
             throw new UserException(DUPLICATED_MEMBER_ID);
         }
@@ -59,10 +63,23 @@ public class UserCreateService {
 //        Optional<UserInfo> userInfo = userRepository.findByUserId(request.getUserId());
 //        if (userInfo.isPresent())
 //            throw new UserException(MEMBER_ID_LENGTH);
+
         userRepository.findByUserId(request.getUserId()).ifPresent((userInfo -> {
             throw new UserException(MEMBER_ID_LENGTH);
         }));
 
 
+    }
+
+    public List<UserInfoDto> getAllIds() {
+        return userRepository.findAll()
+                .stream().map(UserInfoDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    public UserInfoDetailDto getGroupbInpoDetail(String memberId) {
+        return userRepository.findByUserId(memberId)
+                .map(UserInfoDetailDto::fromEntity)
+                .orElseThrow(() -> new UserException(INVALID_REQUEST));
     }
 }

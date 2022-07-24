@@ -1,3 +1,3 @@
 ### Send POST request with json body
-GET http://localhost:8080/getGroupInfos
+GET http://localhost:8080/getGroupInfos/mk1235456
 Accept: application/json
