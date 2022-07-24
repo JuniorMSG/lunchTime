@@ -3,7 +3,7 @@ POST http://localhost:8080/create-user
 Content-Type: application/json
 
 {
-  "userId": "msmms",
+  "userId": "msmdasfasdfms",
   "userPw": "smsmsmsm",
   "name": "DevCat",
   "age": 30,
