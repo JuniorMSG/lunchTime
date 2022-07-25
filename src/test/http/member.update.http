@@ -1,0 +1,13 @@
+### Send POST request with json body
+PUT http://localhost:8080/member/milk6645
+Content-Type: application/json
+
+{
+  "userId": "milk6645",
+  "userPw": "smsmsmsm",
+  "name": "DevCat3",
+  "age": 31,
+  "experienceYears": 6,
+  "jobType": "Developer" ,
+  "foodCountry": "Korea"
+}

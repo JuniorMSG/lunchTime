@@ -1,12 +1,11 @@
 package com.cat.lunchTime.dto;
 
-import com.cat.lunchTime.entity.UserInfo;
+import com.cat.lunchTime.entity.Member;
 import com.cat.lunchTime.type.FoodCountry;
 import com.cat.lunchTime.type.JobType;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -40,6 +39,9 @@ public class CreateUserDTO {
       private Integer age;
 
       @NotNull
+      private Integer experienceYears;
+
+      @NotNull
       private JobType jobType;
 
       @NotNull
@@ -57,15 +59,17 @@ public class CreateUserDTO {
       private String name;
       private Integer age;
       private JobType jobType;
+      private Integer experienceYears;
       private FoodCountry foodCountry;
 
-      public static Response fromEntity(UserInfo userInfo){
+      public static Response fromEntity(Member userInfo){
          return Response.builder()
                  .userId(userInfo.getUserId())
                  .userPw(userInfo.getUserPw())
                  .name(userInfo.getName())
                  .age(userInfo.getAge())
                  .jobType(userInfo.getJobType())
+                 .experienceYears(userInfo.getExperienceYears())
                  .foodCountry(userInfo.getFoodCountry())
                  .build();
       }

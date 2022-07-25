@@ -22,7 +22,7 @@ public enum GroupMember {
     JUNIOR("주니어"),
     MIDDLE("중간"),
     SENIOR("시니어"),
-    TEAMLEADER("팀장")
+    TEAMLEADER("팀장"),
     ;
 
     private final String description;

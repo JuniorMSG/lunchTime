@@ -29,7 +29,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class UserInfo
+public class Member
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +39,7 @@ public class UserInfo
     private String userPw;
     private String name;
     private Integer age;
+    private Integer experienceYears;
 
     @Enumerated(EnumType.STRING)
     private JobType jobType;

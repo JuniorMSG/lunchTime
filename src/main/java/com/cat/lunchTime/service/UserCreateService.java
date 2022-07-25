@@ -1,26 +1,22 @@
 package com.cat.lunchTime.service;
 
 import com.cat.lunchTime.dto.CreateUserDTO;
-import com.cat.lunchTime.dto.UserInfoDetailDto;
-import com.cat.lunchTime.dto.UserInfoDto;
-import com.cat.lunchTime.entity.UserInfo;
-import com.cat.lunchTime.exception.UserErrorCode;
-import com.cat.lunchTime.exception.UserException;
+import com.cat.lunchTime.dto.EditUser;
+import com.cat.lunchTime.dto.UserDetailDto;
+import com.cat.lunchTime.dto.UserDto;
+import com.cat.lunchTime.entity.Member;
+import com.cat.lunchTime.exception.MemberException;
 import com.cat.lunchTime.repository.UserRepository;
-import com.cat.lunchTime.type.FoodCountry;
-import com.cat.lunchTime.type.JobType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.cat.lunchTime.exception.UserErrorCode.*;
+import static com.cat.lunchTime.exception.MemberErrorCode.*;
 
 @Service
 
@@ -33,53 +29,64 @@ public class UserCreateService {
     private final EntityManager em;
 
     @Transactional
-    public CreateUserDTO.Response createUser(CreateUserDTO.Request request){
-
+    public CreateUserDTO.Response createMember(CreateUserDTO.Request request){
             validateCreateUserRequest(request);
+
+
             // business logic start
-            UserInfo userInfo = UserInfo.builder()
+            Member userInfo = Member.builder()
                     .userId(request.getUserId())
                     .userPw(request.getUserPw())
                     .name(request.getName())
                     .age(request.getAge())
+                    .experienceYears(request.getExperienceYears())
                     .jobType(request.getJobType())
                     .foodCountry(request.getFoodCountry())
                     .build();
-
             userRepository.save(userInfo);
             return CreateUserDTO.Response.fromEntity(userInfo);
     }
 
     private void validateCreateUserRequest(CreateUserDTO.Request request) {
-
         // ctrl + alt + v 변수로 refactor 할 수 있다.
-        String userId = request.getUserId();
-        System.out.println(userId);
-        if(userId.length() < 8){
-            throw new UserException(DUPLICATED_MEMBER_ID);
-        }
-
-
-//        Optional<UserInfo> userInfo = userRepository.findByUserId(request.getUserId());
-//        if (userInfo.isPresent())
-//            throw new UserException(MEMBER_ID_LENGTH);
-
-        userRepository.findByUserId(request.getUserId()).ifPresent((userInfo -> {
-            throw new UserException(MEMBER_ID_LENGTH);
-        }));
-
-
+        userRepository.findByUserId(request.getUserId()).ifPresent((developer) -> {
+            throw new MemberException(DUPLICATED_MEMBER_ID);
+        });
     }
 
-    public List<UserInfoDto> getAllIds() {
+
+    public List<UserDto> getAllMembers() {
         return userRepository.findAll()
-                .stream().map(UserInfoDto::fromEntity)
+                .stream().map(UserDto::fromEntity)
                 .collect(Collectors.toList());
     }
-
-    public UserInfoDetailDto getGroupbInpoDetail(String memberId) {
+    public UserDetailDto getMemberDetail(String memberId) {
         return userRepository.findByUserId(memberId)
-                .map(UserInfoDetailDto::fromEntity)
-                .orElseThrow(() -> new UserException(INVALID_REQUEST));
+                .map(UserDetailDto::fromEntity)
+                .orElseThrow(() -> new MemberException(INVALID_REQUEST));
     }
+
+
+    public UserDetailDto editMember(String memberId, EditUser.Request request) {
+        validateEditeUserRequest(memberId, request);
+
+        Member user = userRepository.findByUserId(memberId).orElseThrow(
+                () -> new MemberException(MEMBER_ID_NO)
+        );
+        user.setJobType(request.getJobType());
+        user.setFoodCountry(request.getFoodCountry());
+        user.setAge(request.getAge());
+
+        return UserDetailDto.fromEntity(user);
+    }
+
+    private void validateEditeUserRequest(String memberId, EditUser.Request request) {
+        Member user = userRepository.findByUserId(memberId).orElseThrow(
+                () -> new MemberException(MEMBER_ID_NO)
+        );
+
+
+    }
+
+
 }

@@ -1,12 +1,13 @@
 ### Send POST request with json body
-POST http://localhost:8080/create-user
+POST http://localhost:8080/create-member
 Content-Type: application/json
 
 {
-  "userId": "mk1235456",
-  "userPw": "smsmsmsm",
-  "name": "DevCat3",
+  "userId": "milk6645",
+  "userPw": "99999999",
+  "name": "DevCat",
   "age": 30,
+  "experienceYears": 5,
   "jobType": "Developer" ,
   "foodCountry": "Korea"
 }

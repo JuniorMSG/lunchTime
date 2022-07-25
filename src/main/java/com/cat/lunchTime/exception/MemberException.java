@@ -6,17 +6,17 @@ import lombok.Getter;
  * @author WorkDevCat
  */
 @Getter
-public class UserException extends RuntimeException {
-    private UserErrorCode userErrorCode;
+public class MemberException extends RuntimeException {
+    private MemberErrorCode userErrorCode;
     private String detailMessage;
 
     // 오버라이딩
-    public UserException(UserErrorCode errorCode){
+    public MemberException(MemberErrorCode errorCode){
         super(errorCode.getMessage());
         this.userErrorCode = errorCode;
         this.detailMessage = errorCode.getMessage();;
     }
-    public UserException(UserErrorCode errorCode, String detailMessage){
+    public MemberException(MemberErrorCode errorCode, String detailMessage){
         super(detailMessage);
         this.userErrorCode = errorCode;
         this.detailMessage = detailMessage;
