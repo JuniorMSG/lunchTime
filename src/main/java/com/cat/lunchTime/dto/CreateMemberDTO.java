@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
  *
  */
 @Slf4j
-public class CreateUserDTO {
+public class CreateMemberDTO {
 
    @Getter
    @Setter

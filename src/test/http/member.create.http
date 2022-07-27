@@ -3,9 +3,9 @@ POST http://localhost:8080/create-member
 Content-Type: application/json
 
 {
-  "userId": "milk6645",
+  "userId": "milk6647",
   "userPw": "99999999",
-  "name": "DevCat",
+  "name": "DevCat2",
   "age": 30,
   "experienceYears": 5,
   "jobType": "Developer" ,

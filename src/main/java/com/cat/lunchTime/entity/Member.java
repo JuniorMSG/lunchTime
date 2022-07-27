@@ -1,5 +1,6 @@
 package com.cat.lunchTime.entity;
 
+import com.cat.lunchTime.code.StatusCode;
 import com.cat.lunchTime.type.FoodCountry;
 import com.cat.lunchTime.type.JobType;
 import lombok.*;
@@ -46,6 +47,9 @@ public class Member
 
     @Enumerated(EnumType.STRING)
     private FoodCountry foodCountry;
+
+    @Enumerated(EnumType.STRING)
+    private StatusCode statusCode;
 
     @CreatedDate
     private LocalDateTime createdAt;

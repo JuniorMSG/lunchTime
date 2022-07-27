@@ -15,7 +15,7 @@ import javax.persistence.Enumerated;
 @AllArgsConstructor
 @Slf4j
 @Builder
-public class UserDto {
+public class MemberDto {
     // entity 와 dto를 분리하는게 유연성이 더 좋다.
 
     @Enumerated(EnumType.STRING)
@@ -26,8 +26,8 @@ public class UserDto {
 
     private String name;
 
-    public static UserDto fromEntity(Member userInfo) {
-        return UserDto.builder()
+    public static MemberDto fromEntity(Member userInfo) {
+        return MemberDto.builder()
                 .jobType(userInfo.getJobType())
                 .foodCountry(userInfo.getFoodCountry())
                 .name(userInfo.getName())
