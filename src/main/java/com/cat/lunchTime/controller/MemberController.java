@@ -1,6 +1,6 @@
 package com.cat.lunchTime.controller;
 
-import com.cat.lunchTime.dto.CreateMemberDTO;
+import com.cat.lunchTime.dto.CreateMember;
 import com.cat.lunchTime.dto.EditUser;
 import com.cat.lunchTime.dto.MemberDetailDto;
 import com.cat.lunchTime.dto.MemberDto;
@@ -74,8 +74,8 @@ public class MemberController {
     // ctrl + alt + l 자동정렬
     // ctrl + alt + o 클래스 임포트 / 삭제
     @PostMapping("/create-member")
-    public CreateMemberDTO.Response createMember(
-            @Valid @RequestBody CreateMemberDTO.Request request
+    public CreateMember.Response createMember(
+            @Valid @RequestBody CreateMember.Request request
     ) {
         log.info("request : {}", request);
         return memberService.createMember(request);

@@ -1,7 +1,7 @@
 package com.cat.lunchTime.service;
 
 import com.cat.lunchTime.code.StatusCode;
-import com.cat.lunchTime.dto.CreateMemberDTO;
+import com.cat.lunchTime.dto.CreateMember;
 import com.cat.lunchTime.dto.EditUser;
 import com.cat.lunchTime.dto.MemberDetailDto;
 import com.cat.lunchTime.dto.MemberDto;
@@ -30,7 +30,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final RetiredMemberRepository retiredMemberRepository;
     @Transactional
-    public CreateMemberDTO.Response createMember(CreateMemberDTO.Request request){
+    public CreateMember.Response createMember(CreateMember.Request request){
             validateCreateUserRequest(request);
 
 
@@ -46,10 +46,10 @@ public class MemberService {
                     .statusCode(StatusCode.EMPLOYED)
                     .build();
             memberRepository.save(userInfo);
-            return CreateMemberDTO.Response.fromEntity(userInfo);
+            return CreateMember.Response.fromEntity(userInfo);
     }
 
-    private void validateCreateUserRequest(CreateMemberDTO.Request request) {
+    private void validateCreateUserRequest(CreateMember.Request request) {
         // ctrl + alt + v 변수로 refactor 할 수 있다.
         memberRepository.findByUserId(request.getUserId()).ifPresent((developer) -> {
             throw new MemberException(DUPLICATED_MEMBER_ID);
