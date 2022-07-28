@@ -1,6 +1,7 @@
 package com.cat.lunchTime.entity;
 
 import com.cat.lunchTime.code.StatusCode;
+import com.cat.lunchTime.type.JobLevel;
 import com.cat.lunchTime.type.FoodCountry;
 import com.cat.lunchTime.type.JobType;
 import lombok.*;
@@ -29,6 +30,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+// Entity에서 특정 DTO 하나만을 위한 메서드는 좋지 않다.
 @EntityListeners(AuditingEntityListener.class)
 public class Member
 {
@@ -41,6 +43,10 @@ public class Member
     private String name;
     private Integer age;
     private Integer experienceYears;
+
+
+    @Enumerated(EnumType.STRING)
+    private JobLevel level;
 
     @Enumerated(EnumType.STRING)
     private JobType jobType;

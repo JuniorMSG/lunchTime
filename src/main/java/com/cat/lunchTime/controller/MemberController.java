@@ -1,7 +1,6 @@
 package com.cat.lunchTime.controller;
 
-import com.cat.lunchTime.code.StatusCode;
-import com.cat.lunchTime.dto.CreateMemberDTO;
+import com.cat.lunchTime.dto.CreateMember;
 import com.cat.lunchTime.dto.EditUser;
 import com.cat.lunchTime.dto.MemberDto;
 import com.cat.lunchTime.dto.MemberDetailDto;
@@ -39,7 +38,7 @@ public class MemberController {
 
     @GetMapping("/member/{memberId}")
     public MemberDetailDto getMemberDetail(
-            @PathVariable String memberId
+            @PathVariable final String memberId
     ) {
         // 중괄호로 넣게되면 pass variable으로 값을 가져 올 수 있게된다.
         log.info("Get /getGroupInfo HTTP/1.1 ");
@@ -51,7 +50,7 @@ public class MemberController {
     // Fetch 데이터 일부 수정
     @PutMapping("/member/{memberId}")
     public MemberDetailDto editMember(
-            @PathVariable String memberId,
+            @PathVariable final String memberId,
             @Valid @RequestBody EditUser.Request request
 
     ) {
@@ -63,8 +62,8 @@ public class MemberController {
     // ctrl + alt + l 자동정렬
     // ctrl + alt + o 클래스 임포트 / 삭제
     @PostMapping("/create-member")
-    public CreateMemberDTO.Response createMember(
-            @Valid @RequestBody CreateMemberDTO.Request request
+    public CreateMember.Response createMember(
+            @Valid @RequestBody CreateMember.Request request
     ) {
         log.info("request : {}", request);
         return memberService.createMember(request);
@@ -73,7 +72,7 @@ public class MemberController {
 
     @DeleteMapping("/member/{memberId}")
     public MemberDetailDto deleteMember(
-            @PathVariable String memberId
+            @PathVariable final String memberId
     ) {
         log.info("request : {}", memberId);
         // Transaction
