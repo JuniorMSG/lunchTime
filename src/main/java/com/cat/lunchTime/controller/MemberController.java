@@ -2,8 +2,8 @@ package com.cat.lunchTime.controller;
 
 import com.cat.lunchTime.dto.CreateMember;
 import com.cat.lunchTime.dto.EditUser;
-import com.cat.lunchTime.dto.MemberDto;
 import com.cat.lunchTime.dto.MemberDetailDto;
+import com.cat.lunchTime.dto.MemberDto;
 import com.cat.lunchTime.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +29,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+
+    // MVC에서 C인 Controller 영역에선
+    // 응답값을 잘 돌려주고 잘 받아주는게 주 역할임
+    // 나머지는 Service Layer로 보내줘야함.
+
+    // 서비스 레이어에선 우리는 당연하게 성공한다 라는 로직으로 접근해야함.
+    // 문제가 생겼을땐 Exception을 던지면 어디선가(ExceptionHanler)에서 처리해준다!
+    // 글로벌 예외처리 컨트롤 어드바이서를 꼭 만들어서 하면 좋다.
+
+    // Refactoring
+    // null을 의도적으로 처리하는 것 자체가 별로 좋지 않다.
+
 
     @GetMapping("/members")
     public List<MemberDto> getAllMembers() {
@@ -81,4 +93,23 @@ public class MemberController {
         return memberService.deleteMember(memberId);
     }
 
+
+    /**
+     *  아래의 Exception은 Global Exception Handler로 통합함.
+     *  lunchTimeException
+     */
+//    @ResponseStatus(value = HttpStatus.CONFLICT)
+//    @ExceptionHandler
+//    public MemberErrorResponse handleException (
+//            MemberException e,
+//            HttpServletRequest request
+//    ){
+//        log.error("errorCode {}, url: {}, message {}",
+//                e.getUserErrorCode(), request.getRequestURI(), e.getDetailMessage());
+//
+//        return MemberErrorResponse.builder()
+//                .errorCode(e.getUserErrorCode())
+//                .errMessage(e.getDetailMessage())
+//                .build();
+//    }
 }

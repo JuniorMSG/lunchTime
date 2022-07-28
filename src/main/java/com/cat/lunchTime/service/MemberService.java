@@ -10,11 +10,10 @@ import com.cat.lunchTime.entity.RetiredMember;
 import com.cat.lunchTime.exception.MemberException;
 import com.cat.lunchTime.repository.MemberRepository;
 import com.cat.lunchTime.repository.RetiredMemberRepository;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,53 +29,46 @@ public class MemberService {
     // @RequiredArgsConstructor 자동으로 생성자를 만들어준다.
     private final MemberRepository memberRepository;
     private final RetiredMemberRepository retiredMemberRepository;
-
-    private Member createMemberFromRequest(CreateMember.Request request){
-        return Member.builder()
-                .userId(request.getUserId())
-                .userPw(request.getUserPw())
-                .name(request.getName())
-                .age(request.getAge())
-                .experienceYears(request.getExperienceYears())
-                .jobType(request.getJobType())
-                .foodCountry(request.getFoodCountry())
-                .statusCode(StatusCode.EMPLOYED)
-                .build();
-    }
-
     @Transactional
     public CreateMember.Response createMember(CreateMember.Request request){
             validateCreateUserRequest(request);
 
+
             // business logic start
-            return CreateMember.Response.fromEntity(
-                    createMemberFromRequest(request)
-            );
+            Member userInfo = Member.builder()
+                    .userId(request.getUserId())
+                    .userPw(request.getUserPw())
+                    .name(request.getName())
+                    .age(request.getAge())
+                    .experienceYears(request.getExperienceYears())
+                    .jobType(request.getJobType())
+                    .foodCountry(request.getFoodCountry())
+                    .statusCode(StatusCode.EMPLOYED)
+                    .build();
+            memberRepository.save(userInfo);
+            return CreateMember.Response.fromEntity(userInfo);
     }
-    @Transactional(readOnly = true)
-    public void validateCreateUserRequest(@NonNull CreateMember.Request request) {
+
+    private void validateCreateUserRequest(CreateMember.Request request) {
         // ctrl + alt + v 변수로 refactor 할 수 있다.
         memberRepository.findByUserId(request.getUserId()).ifPresent((developer) -> {
             throw new MemberException(DUPLICATED_MEMBER_ID);
         });
     }
 
-    @Transactional(readOnly = true)
+
     public List<MemberDto> getAllEmployedMembers() {
         return memberRepository.findMemberByStatusCodeEquals(StatusCode.EMPLOYED)
                 .stream().map(MemberDto::fromEntity)
                 .collect(Collectors.toList());
     }
-
-
-    @Transactional(readOnly = true)
     public MemberDetailDto getMemberDetail(String memberId) {
         return memberRepository.findByUserId(memberId)
                 .map(MemberDetailDto::fromEntity)
                 .orElseThrow(() -> new MemberException(INVALID_REQUEST));
     }
 
-    @Transactional
+
     public MemberDetailDto editMember(String memberId, EditUser.Request request) {
         validateEditeUserRequest(memberId, request);
 
@@ -94,6 +86,8 @@ public class MemberService {
         Member user = memberRepository.findByUserId(memberId).orElseThrow(
                 () -> new MemberException(NO_MEMBER_ID)
         );
+
+
     }
 
     @Transactional
@@ -103,7 +97,7 @@ public class MemberService {
         member.setStatusCode(StatusCode.RETIRED);
 
         if (member != null) throw new MemberException(NO_MEMBER_ID);
-
+        
         // 2. save into RetiredMember
         RetiredMember retiredMember = RetiredMember.builder()
                 .userId(memberId)

@@ -1,11 +1,7 @@
 package com.cat.lunchTime.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * packageName    : com.cat.lunchTime.controller
@@ -21,6 +17,6 @@ import java.util.List;
 
 @Slf4j
 @RestController // Bean 을 RestController 으로 등록한다.
-public class LunchTimeGroupController {
+public class GroupController {
 
 }
