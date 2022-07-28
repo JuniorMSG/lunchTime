@@ -1,7 +1,7 @@
 package com.cat.lunchTime.controller;
 
 import com.cat.lunchTime.dto.CreateMember;
-import com.cat.lunchTime.dto.EditUser;
+import com.cat.lunchTime.dto.EditMember;
 import com.cat.lunchTime.dto.MemberDetailDto;
 import com.cat.lunchTime.dto.MemberDto;
 import com.cat.lunchTime.service.MemberService;
@@ -63,7 +63,7 @@ public class MemberController {
     @PutMapping("/member/{memberId}")
     public MemberDetailDto editMember(
             @PathVariable final String memberId,
-            @Valid @RequestBody EditUser.Request request
+            @Valid @RequestBody EditMember.Request request
 
     ) {
         log.info("request : {}", request);

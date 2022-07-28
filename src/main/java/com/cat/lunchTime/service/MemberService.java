@@ -2,7 +2,7 @@ package com.cat.lunchTime.service;
 
 import com.cat.lunchTime.code.StatusCode;
 import com.cat.lunchTime.dto.CreateMember;
-import com.cat.lunchTime.dto.EditUser;
+import com.cat.lunchTime.dto.EditMember;
 import com.cat.lunchTime.dto.MemberDetailDto;
 import com.cat.lunchTime.dto.MemberDto;
 import com.cat.lunchTime.entity.Member;
@@ -10,6 +10,7 @@ import com.cat.lunchTime.entity.RetiredMember;
 import com.cat.lunchTime.exception.MemberException;
 import com.cat.lunchTime.repository.MemberRepository;
 import com.cat.lunchTime.repository.RetiredMemberRepository;
+import com.cat.lunchTime.type.MemberLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,27 +32,36 @@ public class MemberService {
     private final RetiredMemberRepository retiredMemberRepository;
     @Transactional
     public CreateMember.Response createMember(CreateMember.Request request){
-            validateCreateUserRequest(request);
-
-
-            // business logic start
-            Member userInfo = Member.builder()
-                    .userId(request.getUserId())
-                    .userPw(request.getUserPw())
-                    .name(request.getName())
-                    .age(request.getAge())
-                    .experienceYears(request.getExperienceYears())
-                    .jobType(request.getJobType())
-                    .foodCountry(request.getFoodCountry())
-                    .statusCode(StatusCode.EMPLOYED)
-                    .build();
-            memberRepository.save(userInfo);
-            return CreateMember.Response.fromEntity(userInfo);
+        validateCreateMemberRequest(request);
+        request.getMemberLevel().validateExperienceYears(
+                request.getExperienceYears()
+        );
+        // business logic start
+        return CreateMember.Response.fromEntity(
+                memberRepository.save(createMemberFromRequest(request))
+        );
     }
 
-    private void validateCreateUserRequest(CreateMember.Request request) {
+    private Member createMemberFromRequest(CreateMember.Request request) {
+        return Member.builder()
+                .memberId(request.getMemberId())
+                .password(request.getPassword())
+                .name(request.getName())
+                .age(request.getAge())
+                .experienceYears(request.getExperienceYears())
+                .memberLevel(request.getMemberLevel())
+                .jobType(request.getJobType())
+                .foodCountry(request.getFoodCountry())
+                .statusCode(StatusCode.EMPLOYED)
+                .build();
+    }
+
+    private void validateCreateMemberRequest(CreateMember.Request request) {
         // ctrl + alt + v 변수로 refactor 할 수 있다.
-        memberRepository.findByUserId(request.getUserId()).ifPresent((developer) -> {
+        request.getMemberLevel().validateExperienceYears(
+                request.getExperienceYears()
+        );
+        memberRepository.findByMemberId(request.getMemberId()).ifPresent((developer) -> {
             throw new MemberException(DUPLICATED_MEMBER_ID);
         });
     }
@@ -63,44 +73,37 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
     public MemberDetailDto getMemberDetail(String memberId) {
-        return memberRepository.findByUserId(memberId)
-                .map(MemberDetailDto::fromEntity)
-                .orElseThrow(() -> new MemberException(INVALID_REQUEST));
+        return MemberDetailDto.fromEntity(getMemberByMemberId(memberId));
     }
 
-
-    public MemberDetailDto editMember(String memberId, EditUser.Request request) {
-        validateEditeUserRequest(memberId, request);
-
-        Member user = memberRepository.findByUserId(memberId).orElseThrow(
-                () -> new MemberException(NO_MEMBER_ID)
+    private Member getMemberByMemberId(String memberId){
+        return memberRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new MemberException(NO_MEMBER_ID)
         );
-        user.setJobType(request.getJobType());
-        user.setFoodCountry(request.getFoodCountry());
-        user.setAge(request.getAge());
-
-        return MemberDetailDto.fromEntity(user);
     }
 
-    private void validateEditeUserRequest(String memberId, EditUser.Request request) {
-        Member user = memberRepository.findByUserId(memberId).orElseThrow(
-                () -> new MemberException(NO_MEMBER_ID)
+    public MemberDetailDto editMember(String memberId, EditMember.Request request) {
+        return MemberDetailDto.fromEntity(
+                getUpdateMemberFromRequest(request, getMemberByMemberId(memberId))
         );
-
-
+    }
+    private Member getUpdateMemberFromRequest(EditMember.Request request, Member member) {
+        member.setJobType(request.getJobType());
+        member.setFoodCountry(request.getFoodCountry());
+        member.setAge(request.getAge());
+        return member;
     }
 
     @Transactional
     public MemberDetailDto deleteMember(String memberId) {
         // 1. EMPLOYED -> RETIRED
-        Member member = memberRepository.findByUserId(memberId).orElseThrow(() -> new MemberException(NO_MEMBER_ID));
+        Member member = memberRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new MemberException(NO_MEMBER_ID));
         member.setStatusCode(StatusCode.RETIRED);
 
-        if (member != null) throw new MemberException(NO_MEMBER_ID);
-        
         // 2. save into RetiredMember
         RetiredMember retiredMember = RetiredMember.builder()
-                .userId(memberId)
+                .memberId(memberId)
                 .name(member.getName())
                 .build();
 

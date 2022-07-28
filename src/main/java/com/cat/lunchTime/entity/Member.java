@@ -1,7 +1,7 @@
 package com.cat.lunchTime.entity;
 
 import com.cat.lunchTime.code.StatusCode;
-import com.cat.lunchTime.type.JobLevel;
+import com.cat.lunchTime.type.MemberLevel;
 import com.cat.lunchTime.type.FoodCountry;
 import com.cat.lunchTime.type.JobType;
 import lombok.*;
@@ -38,15 +38,15 @@ public class Member
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    private String userId;
-    private String userPw;
+    private String memberId;
+    private String password;
     private String name;
     private Integer age;
     private Integer experienceYears;
 
 
     @Enumerated(EnumType.STRING)
-    private JobLevel level;
+    private MemberLevel memberLevel;
 
     @Enumerated(EnumType.STRING)
     private JobType jobType;

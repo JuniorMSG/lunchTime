@@ -4,6 +4,7 @@ import com.cat.lunchTime.code.StatusCode;
 import com.cat.lunchTime.entity.Member;
 import com.cat.lunchTime.type.FoodCountry;
 import com.cat.lunchTime.type.JobType;
+import com.cat.lunchTime.type.MemberLevel;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,18 +24,20 @@ public class MemberDetailDto {
     private Integer experienceYears;
     private JobType jobType;
     private FoodCountry foodCountry;
+    private MemberLevel memberLevel;
     private StatusCode statusCode;
 
-    public static MemberDetailDto fromEntity(Member userInfo) {
+    public static MemberDetailDto fromEntity(Member member) {
         return MemberDetailDto.builder()
-                .userId(userInfo.getUserId())
-                .userPw(userInfo.getUserPw())
-                .name(userInfo.getName())
-                .age(userInfo.getAge())
-                .experienceYears(userInfo.getExperienceYears())
-                .jobType(userInfo.getJobType())
-                .foodCountry(userInfo.getFoodCountry())
-                .statusCode(userInfo.getStatusCode())
+                .userId(member.getMemberId())
+                .userPw(member.getPassword())
+                .name(member.getName())
+                .age(member.getAge())
+                .experienceYears(member.getExperienceYears())
+                .jobType(member.getJobType())
+                .foodCountry(member.getFoodCountry())
+                .memberLevel(member.getMemberLevel())
+                .statusCode(member.getStatusCode())
                 .build();
     }
 

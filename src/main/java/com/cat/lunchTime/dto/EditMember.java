@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  *
  */
 @Slf4j
-public class EditUser {
+public class EditMember {
 
    @Getter
    @Setter

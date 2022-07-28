@@ -18,8 +18,8 @@ public class RetiredMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    private String userId;
-    private String userPw;
+    private String memberId;
+    private String password;
     private String name;
 
     private StatusCode statusCode;

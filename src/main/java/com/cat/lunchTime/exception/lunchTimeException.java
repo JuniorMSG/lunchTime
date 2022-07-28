@@ -30,10 +30,10 @@ public class lunchTimeException {
             MemberException e,
             HttpServletRequest request
     ) {
-        log.error("errorCode: {}, url: {}, message: {}", e.getUserErrorCode(),
+        log.error("errorCode: {}, url: {}, message: {}", e.getMemberErrorCode(),
                 request.getRequestURI(), e.getDetailMessage(), e);
         return MemberErrorResponse.builder()
-                .errorCode(e.getUserErrorCode())
+                .errorCode(e.getMemberErrorCode())
                 .errorMessage(e.getDetailMessage())
                 .build();
     }

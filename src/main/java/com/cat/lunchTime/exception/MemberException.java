@@ -7,18 +7,18 @@ import lombok.Getter;
  */
 @Getter
 public class MemberException extends RuntimeException {
-    private MemberErrorCode userErrorCode;
+    private MemberErrorCode memberErrorCode;
     private String detailMessage;
 
     // 오버라이딩
     public MemberException(MemberErrorCode errorCode){
         super(errorCode.getMessage());
-        this.userErrorCode = errorCode;
+        this.memberErrorCode = errorCode;
         this.detailMessage = errorCode.getMessage();;
     }
     public MemberException(MemberErrorCode errorCode, String detailMessage){
         super(detailMessage);
-        this.userErrorCode = errorCode;
+        this.memberErrorCode = errorCode;
         this.detailMessage = detailMessage;
     }
 }
